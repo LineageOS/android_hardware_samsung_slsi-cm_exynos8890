@@ -69,7 +69,9 @@ mcResult_t CMcKMod::mapWsm(
     }
 
     // mapping response data is in the buffer
-    struct mc_ioctl_map mapParams = { len : len };
+    struct mc_ioctl_map mapParams = {
+        .len = len
+    };
 
     ret = ioctl(fdKMod, MC_IO_MAP_WSM, &mapParams);
     if (ret != 0) {
@@ -113,7 +115,9 @@ mcResult_t CMcKMod::mapMCI(
 {
     LOG_I("Mapping MCI: len=%d", len);
     // mapping response data is in the buffer
-    struct mc_ioctl_map mapParams = { len : len };
+    struct mc_ioctl_map mapParams = {
+        .len = len
+    };
 
     if (!isOpen()) {
         LOG_E("no connection to kmod");
@@ -215,13 +219,11 @@ int CMcKMod::fcInit(uint32_t nqLength, uint32_t mcpOffset, uint32_t mcpLength)
 
     // Init MC with NQ and MCP buffer addresses
     struct mc_ioctl_init fcInitParams = {
-nq_length :
-        nqLength,
-mcp_offset :
-        mcpOffset,
-mcp_length :
-        mcpLength
+        .nq_length = nqLength,
+        .mcp_offset = mcpOffset,
+        .mcp_length = mcpLength
     };
+
     ret = ioctl(fdKMod, MC_IO_INIT, &fcInitParams);
     if (ret != 0) {
         LOG_ERRNO("ioctl MC_IO_INIT");
@@ -241,7 +243,9 @@ int CMcKMod::fcInfo(uint32_t extInfoId, uint32_t *pState, uint32_t *pExtInfo)
     }
 
     // Init MC with NQ and MCP buffer addresses
-    struct mc_ioctl_info fcInfoParams = { ext_info_id : extInfoId };
+    struct mc_ioctl_info fcInfoParams = {
+        .ext_info_id = extInfoId
+    };
     ret = ioctl(fdKMod, MC_IO_INFO, &fcInfoParams);
     if (ret != 0) {
         LOG_ERRNO("ioctl MC_IO_INFO");
@@ -342,12 +346,9 @@ mcResult_t CMcKMod::registerWsmL2(
     }
 
     struct mc_ioctl_reg_wsm params = {
-buffer :
-        (uint32_t) buffer,
-len :
-        len,
-pid :
-        pid
+        .buffer = (uint32_t) buffer,
+        .len = len,
+        .pid = pid
     };
 
     int ret = ioctl(fdKMod, MC_IO_REG_WSM, &params);
