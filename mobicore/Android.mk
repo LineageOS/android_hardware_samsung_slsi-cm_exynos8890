@@ -24,7 +24,9 @@ GLOBAL_LIBRARIES := libstlport
 # Include the Daemon
 include $(MOBICORE_PROJECT_PATH)/daemon/Android.mk
 
-MC_INCLUDE_DIR := $(COMP_PATH_MobiCore)/inc \
+MC_INCLUDE_DIR := \
+    $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include \
+    $(COMP_PATH_MobiCore)/inc \
     $(COMP_PATH_MobiCore)/inc/GP \
     $(COMP_PATH_MobiCore)/inc/TlCm \
     $(COMP_PATH_MobiCore)/inc/TlCm/2.0 \
@@ -37,6 +39,8 @@ GDM_PROVLIB_SHARED_LIBS=libMcClient
 # Include the provisioning lib
 include $(MOBICORE_PROJECT_PATH)/provlib/Android.mk
 
+LOCAL_ADDITIONAL_DEPENDENCIES += \
+	$(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
 
 MOBICORE_DIR_INC := $(MC_INCLUDE_DIR) $(MOBICORE_PROJECT_PATH)/common/curl/include
 include $(MOBICORE_PROJECT_PATH)/rootpa/Code/Android/app/jni/Android.mk
