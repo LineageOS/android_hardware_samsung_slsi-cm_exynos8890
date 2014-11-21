@@ -16,22 +16,18 @@
 
 #ifndef ANDROID_EXYNOS_HWC_MODULE_H_
 #define ANDROID_EXYNOS_HWC_MODULE_H_
+
 #include <hardware/hwcomposer.h>
+#include "decon_fb.h"
 
 #define VSYNC_DEV_PREFIX "/sys/devices/"
-#define VSYNC_DEV_MIDDLE "14680000.sysmmu/14640000.sysmmu/"
-#define VSYNC_DEV_NAME  "14400000.fimd_fb/vsync"
+#define VSYNC_DEV_MIDDLE ""
+#define VSYNC_DEV_NAME  "13800000.decon_fb/vsync"
 
 #define FIMD_WORD_SIZE_BYTES   16
 #define FIMD_BURSTLEN   8
 #define FIMD_ADDED_BURSTLEN_BYTES     4
 #define FIMD_BW_OVERLAP_CHECK
-
-#define TRY_SECOND_VSYNC_DEV
-#ifdef TRY_SECOND_VSYNC_DEV
-#define VSYNC_DEV_NAME2  "exynos5-fb.1/vsync"
-#define VSYNC_DEV_MIDDLE2  "platform/exynos-sysmmu.30/exynos-sysmmu.11/"
-#endif
 
 #define DUAL_VIDEO_OVERLAY_SUPPORT
 
