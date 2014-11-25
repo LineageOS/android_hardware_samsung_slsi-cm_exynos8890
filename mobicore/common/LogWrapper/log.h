@@ -77,8 +77,8 @@
     #define LOG_W(fmt, args...) DUMMY_FUNCTION()
 #else
     // add LINE
-    #define LOG_I(fmt, args...) LOG_i(fmt";%d", ## args, __LINE__)
-    #define LOG_W(fmt, args...) LOG_w(fmt";%d", ## args, __LINE__)
+    #define LOG_I(fmt, args...) LOG_i(fmt ";%d", ## args, __LINE__)
+    #define LOG_W(fmt, args...) LOG_w(fmt ";%d", ## args, __LINE__)
 #endif
     // LOG_E is always defined
     #define _LOG_E(fmt, args...) LOG_e(fmt, ## args)
@@ -107,10 +107,10 @@
     #define LOG_I(fmt, ...) DUMMY_FUNCTION()
     #define LOG_W(fmt, ...) DUMMY_FUNCTION()
 #else
-    #define LOG_I(...)  _LOG_x("I",__VA_ARGS__)
-    #define LOG_W(...)  _LOG_x("W",__VA_ARGS__)
+    #define LOG_I(...)  _LOG_x("I", __VA_ARGS__)
+    #define LOG_W(...)  _LOG_x("W", __VA_ARGS__)
 #endif
-    #define _LOG_E(...)  _LOG_x("E",__VA_ARGS__)
+    #define _LOG_E(...)  _LOG_x("E", __VA_ARGS__)
 
     #define LOG_i(...) printf(__VA_ARGS__)
 	#define LOG_w(...) printf(__VA_ARGS__)
