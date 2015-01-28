@@ -136,15 +136,15 @@ mcResult_t CMcKMod::mapMCI(
         LOG_ERRNO("mmap");
         return MAKE_MC_DRV_KMOD_WITH_ERRNO(errno);
     }
-    mapParams.addr = (unsigned long)virtAddr;
+    unsigned long addr = (unsigned long)virtAddr;
     *pReuse = mapParams.reused;
 
-    LOG_V(" MCI mapped to %p, handle=%d, phys=0x%llx, reused=%s",
-          (void *)mapParams.addr, mapParams.handle, mapParams.phys_addr,
+    LOG_V(" MCI mapped to %p, handle=%d, phys=%p, reused=%s",
+          (void *)addr, mapParams.handle, mapParams.phys_addr,
           mapParams.reused ? "true" : "false");
 
     if (pVirtAddr != NULL) {
-        *pVirtAddr = (void *)mapParams.addr;
+        *pVirtAddr = (void *)addr;
     }
 
     if (pHandle != NULL) {
