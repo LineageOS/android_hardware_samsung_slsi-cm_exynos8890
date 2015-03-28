@@ -409,7 +409,6 @@ struct s3c_fb {
     int		DSU_x_delta;
     int		DSU_y_delta;
 #endif
-#endif
 #if defined(CONFIG_FB_HIBERNATION_DISPLAY) || defined(CONFIG_FB_WINDOW_UPDATE)
     struct decon_lcd	*lcd_update;
 #endif
