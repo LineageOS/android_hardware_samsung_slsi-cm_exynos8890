@@ -23,7 +23,7 @@ LOCAL_SHARED_LIBRARIES := liblog libutils libcutils libexynosutils libexynosv4l2
 LOCAL_CFLAGS += -DUSES_VIRTUAL_DISPLAY
 
 LOCAL_C_INCLUDES := \
-	$(LOCAL_PATH)/../../exynos5/include \
+	$(LOCAL_PATH)/../../exynos5-insignal/include \
 	$(TOP)/hardware/samsung_slsi/exynos/include \
 	$(TOP)/hardware/samsung_slsi/exynos/libexynosutils \
 	$(TOP)/hardware/samsung_slsi/$(TARGET_SOC)/include \

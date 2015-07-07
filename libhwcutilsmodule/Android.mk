@@ -25,7 +25,7 @@ LOCAL_CFLAGS += -DUSES_VIRTUAL_DISPLAY
 endif
 
 LOCAL_C_INCLUDES := \
-	$(LOCAL_PATH)/../../exynos5/include \
+	$(LOCAL_PATH)/../../exynos5-insignal/include \
 	$(TOP)/hardware/samsung_slsi/exynos/include \
 	$(TOP)/hardware/samsung_slsi/exynos/libexynosutils \
 	$(TOP)/hardware/samsung_slsi/$(TARGET_SOC)/include \
