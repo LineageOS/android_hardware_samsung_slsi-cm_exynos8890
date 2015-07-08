@@ -23,6 +23,7 @@ LOCAL_SHARED_LIBRARIES := liblog libutils libcutils libexynosutils libexynosv4l2
 LOCAL_CFLAGS += -DUSES_VIRTUAL_DISPLAY
 
 LOCAL_C_INCLUDES := \
+	$(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include \
 	$(LOCAL_PATH)/../../exynos5-insignal/include \
 	$(TOP)/hardware/samsung_slsi/exynos/include \
 	$(TOP)/hardware/samsung_slsi/exynos/libexynosutils \
@@ -32,6 +33,9 @@ LOCAL_C_INCLUDES := \
 	$(TOP)/hardware/samsung_slsi/exynos/libhwcutils \
 	$(TOP)/hardware/samsung_slsi/exynos/libdisplay \
 	$(TOP)/hardware/samsung_slsi/exynos/libvirtualdisplay
+
+LOCAL_ADDITIONAL_DEPENDENCIES += \
+	$(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
 
 LOCAL_SRC_FILES := \
 	ExynosVirtualDisplayModule.cpp
