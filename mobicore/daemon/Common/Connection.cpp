@@ -246,7 +246,7 @@ bool Connection::isConnectionAlive(void)
 bool Connection::getPeerCredentials(struct ucred &cr)
 {
     struct ucred cred;
-    int len = sizeof (cred);
+    socklen_t len = sizeof (cred);
     assert(socketDescriptor != -1);
     int ret = getsockopt(socketDescriptor, SOL_SOCKET, SO_PEERCRED, &cred,
                          &len);
