@@ -22,7 +22,7 @@
 
 #define VSYNC_DEV_PREFIX "/sys/devices/"
 #define VSYNC_DEV_MIDDLE ""
-#define VSYNC_DEV_NAME  "13800000.decon_fb/vsync"
+#define VSYNC_DEV_NAME  "13930000.decon_fb/vsync"
 
 #define FIMD_WORD_SIZE_BYTES   16
 #define FIMD_BURSTLEN   8
