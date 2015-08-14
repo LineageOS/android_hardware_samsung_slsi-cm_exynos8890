@@ -513,7 +513,7 @@ mcResult_t MobiCoreDevice::openSession(
             mcpMessage->rspOpen.sessionId);
 
         pRspOpenSessionPayload->sessionId = trustletSession->sessionId;
-        pRspOpenSessionPayload->deviceSessionId = (uint32_t)trustletSession;
+        pRspOpenSessionPayload->deviceSessionId = (uintptr_t)trustletSession;
         pRspOpenSessionPayload->sessionMagic = trustletSession->sessionMagic;
 
         trustletSession->gp_level=((mclfHeaderV24_ptr)&pLoadDataOpenSession->tlHeader->mclfHeaderV2)->gp_level;
@@ -523,7 +523,7 @@ mcResult_t MobiCoreDevice::openSession(
         trustletSessions.push_back(trustletSession);
 
         if (tciHandle != 0 && tciLen != 0) {
-            trustletSession->addBulkBuff(new CWsm((void *)pLoadDataOpenSession->offs, pLoadDataOpenSession->len, tciHandle, 0));
+            trustletSession->addBulkBuff(new CWsm((void *)(uintptr_t)pLoadDataOpenSession->offs, pLoadDataOpenSession->len, tciHandle, 0));
         }
 
         // We have some queued notifications and we need to send them to them
@@ -606,7 +606,7 @@ TrustletSession *MobiCoreDevice::registerTrustletConnection(
     {
         TrustletSession *session = *iterator;
 
-        if (session != (TrustletSession *) (cmdNqConnect->deviceSessionId)) {
+        if (session != (TrustletSession *)(uintptr_t) (cmdNqConnect->deviceSessionId)) {
             continue;
         }
 
@@ -749,7 +749,7 @@ mcResult_t MobiCoreDevice::mapBulk(
     // TODO-2012-09-06-haenellu: considernot ignoring the error case, ClientLib
     //                           does not allow this.
     session->addBulkBuff(
-                new CWsm((void *)offsetPayload,
+                new CWsm((void *)(uintptr_t)offsetPayload,
                 lenBulkMem,
                 handle,
                 pAddrL2));

@@ -88,7 +88,7 @@ void CThread::exit(
 )
 {
     setExiting();
-    pthread_exit((void *)exitcode);
+    pthread_exit((void *)(uintptr_t)exitcode);
 }
 
 

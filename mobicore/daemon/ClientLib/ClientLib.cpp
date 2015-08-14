@@ -769,7 +769,7 @@ __MC_CLIENT_LIB_API mcResult_t mcOpenGPTA(
         SEND_TO_DAEMON(devCon, MC_DRV_CMD_OPEN_TRUSTED_APP,
                        session->deviceId,
                        *uuid,
-                       (uint32_t)(tci) & 0xFFF,
+                       (uintptr_t)(tci) & 0xFFF,
                        (uint32_t)handle,
                        len);
 

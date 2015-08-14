@@ -346,7 +346,7 @@ mcResult_t CMcKMod::registerWsmL2(
     }
 
     struct mc_ioctl_reg_wsm params = {
-        .buffer = (uint32_t) buffer,
+        .buffer = (uintptr_t) buffer,
         .len = len,
         .pid = pid
     };

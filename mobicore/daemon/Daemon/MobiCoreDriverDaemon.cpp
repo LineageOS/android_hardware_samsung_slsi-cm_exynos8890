@@ -316,7 +316,7 @@ bool MobiCoreDriverDaemon::loadDeviceDriver(
         // Initialize information data of open session command
         loadDataOpenSession_t loadDataOpenSession;
         loadDataOpenSession.baseAddr = pWsm->physAddr;
-        loadDataOpenSession.offs = ((uint32_t) regObj->value) & 0xFFF;
+        loadDataOpenSession.offs = ((uintptr_t) regObj->value) & 0xFFF;
         loadDataOpenSession.len = regObj->len;
         loadDataOpenSession.tlHeader = (mclfHeader_ptr) (regObj->value + regObj->tlStartOffset);
 
@@ -376,7 +376,7 @@ bool MobiCoreDriverDaemon::loadDeviceDriver(
 
 #define RECV_PAYLOAD_FROM_CLIENT(CONNECTION, CMD_BUFFER) \
 { \
-    void *payload = (void*)((uint32_t)CMD_BUFFER + sizeof(mcDrvCommandHeader_t)); \
+    void *payload = (void*)((uintptr_t)CMD_BUFFER + sizeof(mcDrvCommandHeader_t)); \
     uint32_t payload_len = sizeof(*CMD_BUFFER) - sizeof(mcDrvCommandHeader_t); \
     int32_t rlen = CONNECTION->readData(payload, payload_len); \
     if (rlen < 0) { \
@@ -499,7 +499,7 @@ void MobiCoreDriverDaemon::processOpenSession(Connection *connection, bool isGpU
     // Initialize information data of open session command
     loadDataOpenSession_t loadDataOpenSession;
     loadDataOpenSession.baseAddr = pWsm->physAddr;
-    loadDataOpenSession.offs = ((uint32_t) regObj->value) & 0xFFF;
+    loadDataOpenSession.offs = ((uintptr_t) regObj->value) & 0xFFF;
     loadDataOpenSession.len = regObj->len;
     loadDataOpenSession.tlHeader = (mclfHeader_ptr) (regObj->value + regObj->tlStartOffset);
 
@@ -572,7 +572,7 @@ mcResult_t MobiCoreDriverDaemon::processLoadCheck(mcSpid_t spid, void *blob, uin
     // Initialize information data of open session command
     loadDataOpenSession_t loadDataOpenSession;
     loadDataOpenSession.baseAddr = pWsm->physAddr;
-    loadDataOpenSession.offs = ((uint32_t) regObj->value) & 0xFFF;
+    loadDataOpenSession.offs = ((uintptr_t) regObj->value) & 0xFFF;
     loadDataOpenSession.len = regObj->len;
     loadDataOpenSession.tlHeader = (mclfHeader_ptr) (regObj->value + regObj->tlStartOffset);
 
@@ -663,7 +663,7 @@ void MobiCoreDriverDaemon::processOpenTrustlet(Connection *connection)
     // Initialize information data of open session command
     loadDataOpenSession_t loadDataOpenSession;
     loadDataOpenSession.baseAddr = pWsm->physAddr;
-    loadDataOpenSession.offs = ((uint32_t) regObj->value) & 0xFFF;
+    loadDataOpenSession.offs = ((uintptr_t) regObj->value) & 0xFFF;
     loadDataOpenSession.len = regObj->len;
     loadDataOpenSession.tlHeader = (mclfHeader_ptr) (regObj->value + regObj->tlStartOffset);
 
@@ -771,7 +771,7 @@ void MobiCoreDriverDaemon::processNotify(Connection  *connection)
     // Read entire command data
     MC_DRV_CMD_NOTIFY_struct  cmd;
     //RECV_PAYLOAD_FROM_CLIENT(connection, &cmd);
-    void *payload = (void *)((uint32_t)&cmd + sizeof(mcDrvCommandHeader_t));
+    void *payload = (void *)((uintptr_t)&cmd + sizeof(mcDrvCommandHeader_t));
     uint32_t payload_len = sizeof(cmd) - sizeof(mcDrvCommandHeader_t);
     uint32_t rlen = connection->readData(payload, payload_len);
     if ((int) rlen < 0) {
@@ -1456,7 +1456,7 @@ bool MobiCoreDriverDaemon::loadToken(uint8_t *token, uint32_t sosize)
         /* Initialize information data of LOAD_TOKEN command */
         loadTokenData_t loadTokenData;
         loadTokenData.addr = pWsm->physAddr;
-        loadTokenData.offs = ((uint32_t) token) & 0xFFF;
+        loadTokenData.offs = ((uintptr_t) token) & 0xFFF;
         loadTokenData.len = sosize;
 
         conn = new Connection();
