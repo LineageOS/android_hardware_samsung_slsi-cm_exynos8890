@@ -128,14 +128,14 @@ static gderror GDPROVAPI _GDMCProvBeginProvisioning ( gdhandle *provhandle )
 
   memset(inst,0,sizeof(gdmcinst));
 
-  *provhandle = (gdhandle)inst;
+  *provhandle = (gdhandle)(uintptr_t)inst;
 
   return GDERROR_OK;
 }
 
 static gderror GDPROVAPI _GDMCProvEndProvisioning ( gdhandle provhandle )
 {
-  gdmcinst       *inst = (gdmcinst*)provhandle;
+  gdmcinst       *inst = (gdmcinst*)(uintptr_t)provhandle;
 
   if (IsBadWritePtr(inst,sizeof(gdmcinst)))
     return GDERROR_PARAMETER;
@@ -153,7 +153,7 @@ static gderror GDPROVAPI _GDMCProvExecuteProvisioningStep (
                   _u32       *msgout_size )
 {
   gderror           error       = GDERROR_OK;
-  gdmcinst         *inst        = (gdmcinst*)provhandle;
+  gdmcinst         *inst        = (gdmcinst*)(uintptr_t)provhandle;
   gdmc_msgheader   *header      = NULL;
   _u8              *body        = NULL;
   gdmc_msgtrailer  *trailer     = NULL;
