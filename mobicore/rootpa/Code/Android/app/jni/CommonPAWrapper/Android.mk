@@ -47,6 +47,9 @@ ifeq ($(DEBUG), 1)
     LOCAL_CFLAGS += -D__DEBUG=1
 endif
 
+# Build for the first arch (64-bit)
+LOCAL_MULTILIB := first
+
 LOCAL_SRC_FILES += commonwrapper.cpp
 LOCAL_SRC_FILES += JniHelpers.cpp
 LOCAL_SRC_FILES += CmpResponses.cpp
