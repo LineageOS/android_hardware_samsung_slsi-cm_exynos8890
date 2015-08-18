@@ -1,32 +1,15 @@
 /*
  * Copyright (c) 2013-2014 TRUSTONIC LIMITED
- * All rights reserved.
+ * All Rights Reserved.
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * version 2 as published by the Free Software Foundation.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * 3. Neither the name of the TRUSTONIC LIMITED nor the names of its
- *    contributors may be used to endorse or promote products derived from
- *    this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
- * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
  */
 /*
  * The <t-base Driver Kernel Module is a Linux device driver, which represents
@@ -98,13 +81,24 @@ struct mc_ioctl_map {
  * Returns the physical address of the MMU table.
  * The page alignment will be created and the appropriated pSize and pOffsetMMU
  * will be modified to the used values.
+ *
+ * We assume the 64 bit compatible one to be the default and the
+ * 32 bit one to be the compat one but we must serve both of them.
  */
-struct mc_ioctl_reg_wsm {
+struct mc_compat_ioctl_reg_wsm {
 	uint32_t buffer;	/* base address of the virtual address  */
 	uint32_t len;		/* size of the virtual address space */
 	uint32_t pid;		/* process id */
 	uint32_t handle;	/* driver handle for locked memory */
 	uint64_t table_phys;	/* physical address of the MMU table */
+};
+
+struct mc_ioctl_reg_wsm {
+	uint64_t buffer;	/* base address of the virtual address  */
+	uint32_t len;		/* size of the virtual address space */
+	uint32_t pid;		/* process id */
+	uint32_t handle;	/* driver handle for locked memory */
+	uint64_t table_phys;/* physical address of the MMU table */
 };
 
 /*
@@ -169,8 +163,14 @@ struct mc_ioctl_resolv_wsm {
  * Creates a MMU Table of the given base address and the size of the
  * data.
  * Parameter: mc_ioctl_reg_wsm
+ *
+ * Since the end ID is also based on the size of the structure it is
+ * safe to use the same ID(6) for both
  */
 #define MC_IO_REG_WSM		_IOWR(MC_IOC_MAGIC, 6, struct mc_ioctl_reg_wsm)
+#define MC_COMPAT_REG_WSM	_IOWR(MC_IOC_MAGIC, 6, \
+			struct mc_compat_ioctl_reg_wsm)
+
 #define MC_IO_UNREG_WSM		_IO(MC_IOC_MAGIC, 7)
 #define MC_IO_LOCK_WSM		_IO(MC_IOC_MAGIC, 8)
 #define MC_IO_UNLOCK_WSM	_IO(MC_IOC_MAGIC, 9)
