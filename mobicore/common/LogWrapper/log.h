@@ -45,6 +45,7 @@
 #ifndef WIN32
 #include <android/log.h>
 #endif
+#include <string.h>
 
 /** LOG_I(fmt, args...)
  * Informative logging, only shown in debug version

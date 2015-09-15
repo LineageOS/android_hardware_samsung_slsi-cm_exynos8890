@@ -36,6 +36,8 @@
 #include "Mci/mcinq.h"
 #include <sys/mman.h>
 #include "GpTci.h"
+#include <stdlib.h>
+#include <string.h>
 
 //------------------------------------------------------------------------------
 // Macros
