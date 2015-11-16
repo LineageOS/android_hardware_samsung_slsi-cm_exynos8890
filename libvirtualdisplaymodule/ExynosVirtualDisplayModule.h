@@ -11,4 +11,13 @@ class ExynosVirtualDisplayModule : public ExynosVirtualDisplay {
         virtual int32_t getDisplayAttributes(const uint32_t attribute);
 };
 
+enum {
+    HWC_DISPLAY_COMPOSITION_TYPE = 0,
+    HWC_DISPLAY_GLES_FORMAT,
+    HWC_DISPLAY_SINK_BQ_FORMAT,
+    HWC_DISPLAY_SINK_BQ_USAGE,
+    HWC_DISPLAY_SINK_BQ_WIDTH,
+    HWC_DISPLAY_SINK_BQ_HEIGHT
+};
+
 #endif
