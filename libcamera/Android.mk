@@ -102,7 +102,7 @@ include $(CLEAR_VARS)
 
 # HAL module implemenation stored in
 # hw/<COPYPIX_HARDWARE_MODULE_ID>.<ro.product.board>.so
-LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/hw
+LOCAL_MODULE_RELATIVE_PATH := hw
 
 LOCAL_C_INCLUDES += \
 	$(LOCAL_PATH)/../include \
