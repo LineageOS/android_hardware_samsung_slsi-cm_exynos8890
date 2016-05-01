@@ -47,6 +47,14 @@
 
 #define ION_FLAG_PRESERVE_KMAP 4
 
+#ifndef HAL_PIXEL_FORMAT_sRGB_A_8888
+#define HAL_PIXEL_FORMAT_sRGB_A_8888 12
+#endif
+
+#ifndef HAL_PIXEL_FORMAT_sRGB_X_8888
+#define HAL_PIXEL_FORMAT_sRGB_X_8888 13
+#endif
+
 /*****************************************************************************/
 
 struct gralloc_context_t {
