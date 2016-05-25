@@ -31,12 +31,15 @@
 
 #define DUAL_VIDEO_OVERLAY_SUPPORT
 
-/* Framebuffer API specific defines (decon.h) */
+/* Framebuffer API specific defines (decon_fb.h) */
 #define WIN_STATE_DISABLED  decon_win_config::DECON_WIN_STATE_DISABLED
 #define WIN_STATE_COLOR     decon_win_config::DECON_WIN_STATE_COLOR
 #define WIN_STATE_BUFFER    decon_win_config::DECON_WIN_STATE_BUFFER
+#define WIN_STATE_UPDATE    decon_win_config::DECON_WIN_STATE_UPDATE
 #define BLENDING_NONE       DECON_BLENDING_NONE
-#define BLENDING_MAX        DECON_BLENDING_MAX
+#define BLENDING_PREMULT    DECON_BLENDING_PREMULT
+#define BLENDING_COVERAGE	DECON_BLENDING_COVERAGE
+#define BLENDING_MAX		DECON_BLENDING_MAX
 #define PIXEL_FORMAT_MAX    DECON_PIXEL_FORMAT_MAX
 
 const size_t SOC_NUM_HW_WINDOWS = MAX_DECON_WIN;
@@ -53,7 +56,6 @@ inline decon_blending halBlendingToSocBlending(int32_t blending)
             return DECON_BLENDING_PREMULT;
         case HWC_BLENDING_COVERAGE:
             return DECON_BLENDING_COVERAGE;
-
         default:
             return DECON_BLENDING_MAX;
     }
@@ -62,20 +64,20 @@ inline decon_blending halBlendingToSocBlending(int32_t blending)
 inline decon_pixel_format halFormatToSocFormat(int format)
 {
     switch (format) {
-    case HAL_PIXEL_FORMAT_RGBA_8888:
-        return DECON_PIXEL_FORMAT_RGBA_8888;
-    case HAL_PIXEL_FORMAT_RGBX_8888:
-        return DECON_PIXEL_FORMAT_RGBX_8888;
-    case HAL_PIXEL_FORMAT_RGB_565:
-        return DECON_PIXEL_FORMAT_RGB_565;
-    case HAL_PIXEL_FORMAT_BGRA_8888:
-        return DECON_PIXEL_FORMAT_BGRA_8888;
+        case HAL_PIXEL_FORMAT_RGBA_8888:
+            return DECON_PIXEL_FORMAT_RGBA_8888;
+        case HAL_PIXEL_FORMAT_RGBX_8888:
+            return DECON_PIXEL_FORMAT_RGBX_8888;
+        case HAL_PIXEL_FORMAT_RGB_565:
+            return DECON_PIXEL_FORMAT_RGB_565;
+        case HAL_PIXEL_FORMAT_BGRA_8888:
+            return DECON_PIXEL_FORMAT_BGRA_8888;
 #ifdef EXYNOS_SUPPORT_BGRX_8888
-    case HAL_PIXEL_FORMAT_BGRX_8888:
-        return DECON_PIXEL_FORMAT_BGRX_8888;
+        case HAL_PIXEL_FORMAT_BGRX_8888:
+            return DECON_PIXEL_FORMAT_BGRX_8888;
 #endif
-    default:
-        return DECON_PIXEL_FORMAT_MAX;
+        default:
+            return DECON_PIXEL_FORMAT_MAX;
     }
 }
 
