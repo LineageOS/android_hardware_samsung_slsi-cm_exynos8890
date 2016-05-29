@@ -61,9 +61,6 @@
 #define MCI_BUFFER_SIZE   (NQ_BUFFER_SIZE + MCP_BUFFER_SIZE)
 
 //------------------------------------------------------------------------------
-MC_CHECK_VERSION(MCI, 0, 2);
-
-//------------------------------------------------------------------------------
 __attribute__ ((weak)) MobiCoreDevice *getDeviceInstance(
     void
 )
@@ -130,12 +127,6 @@ bool TrustZoneDevice::initDevice(
         return false;
     }
     mciBuffer = pWsmMcp->virtAddr;
-
-    if (!checkMciVersion())
-    {
-        LOG_E("checkMciVersion failed");
-        return false;
-    }
 
     // Only do a fastcall if MCI has not been reused (MC already initialized)
     if (!mciReused)

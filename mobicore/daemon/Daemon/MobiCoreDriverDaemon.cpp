@@ -143,9 +143,6 @@ void MobiCoreDriverDaemon::run(
     // start device (scheduler)
     mobiCoreDevice->start();
 
-    LOG_I_RELEASE("Checking version of <t-base");
-    checkMobiCoreVersion(mobiCoreDevice);
-
     // Load device driver if requested
     if (loadDriver) {
         for (unsigned int i = 0; i < drivers.size(); i++)
