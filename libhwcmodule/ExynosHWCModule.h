@@ -62,6 +62,8 @@ inline decon_blending halBlendingToSocBlending(int32_t blending)
 inline decon_pixel_format halFormatToSocFormat(int format)
 {
     switch (format) {
+    case HAL_PIXEL_FORMAT_EXYNOS_ARGB_8888:
+	return DECON_PIXEL_FORMAT_ARGB_8888;
     case HAL_PIXEL_FORMAT_RGBA_8888:
         return DECON_PIXEL_FORMAT_RGBA_8888;
     case HAL_PIXEL_FORMAT_RGBX_8888:

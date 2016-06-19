@@ -1,8 +1,6 @@
 #ifndef __DECON_FB_H__
 #define __DECON_FB_H__
 
-#define DECON_WIN_UPDATE_IDX	(8)
-#define DEV_DECON	6
 #define MAX_DECON_WIN           (8)
 #define MAX_DECON_EXT_WIN       (5)
 #define MAX_BUF_PLANE_CNT       3
