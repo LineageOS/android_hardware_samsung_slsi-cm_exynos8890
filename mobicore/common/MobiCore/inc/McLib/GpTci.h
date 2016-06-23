@@ -28,7 +28,6 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 #ifndef _GP_TCI_H_
 #define _GP_TCI_H_
 
@@ -37,15 +36,10 @@ typedef struct {
     uint32_t   b;
 } TEE_Value;
 
-#if defined (TRUSTEDAPP)
-typedef struct {
-    void        *sVirtualAddr;         /**< The virtual address of the Bulk buffer regarding the address space of the Trustlet, already includes a possible offset! */
-    uint32_t    sVirtualLen;       /**< Length of the mapped Bulk buffer */
-} mcBulkMap_t;
-#endif
 
 typedef struct {
-    mcBulkMap_t mapInfo;
+     uint32_t    sVirtualAddr;         /**< The virtual address of the Bulk buffer regarding the address space of the Trustlet, already includes a possible offset! */
+    uint32_t    sVirtualLen; 
     uint32_t    outputSize;
 } _TEEC_MemoryReferenceInternal;
 
@@ -77,11 +71,6 @@ typedef struct {
     uint32_t returnOrigin;
     uint32_t returnStatus;
 } _TEEC_TCI;
-
-#define TEEC_MEMREF_WHOLE             0xC
-#define TEEC_MEMREF_PARTIAL_INPUT     0xD
-#define TEEC_MEMREF_PARTIAL_OUTPUT    0xE
-#define TEEC_MEMREF_PARTIAL_INOUT     0xF
 
 /**
  * Termination codes

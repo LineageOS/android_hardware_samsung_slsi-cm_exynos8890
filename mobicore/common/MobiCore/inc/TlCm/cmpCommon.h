@@ -1,3 +1,33 @@
+/*
+ * Copyright (c) 2013 TRUSTONIC LIMITED
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the TRUSTONIC LIMITED nor the names of its
+ *    contributors may be used to endorse or promote products derived from
+ *    this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 /** @addtogroup CMP_COMMON
  * Common definitions of content management protocols (CMP) supported by the
  * content management trustlet (TlCm).
@@ -8,33 +38,6 @@
  * Common CMP global definitions.
  * Various components need access to (sub-)structures defined and used by CMP.
  * These common definitions are made available through this header file.
- *
- * Copyright © Trustonic Limited 2013.
- *
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- * 3. Neither the name of the Trustonic Limited nor the names of its
- *    contributors may be used to endorse or promote products derived from this
- *    software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
  */
 
 #ifndef CMP_COMMON_H_
@@ -250,6 +253,81 @@ typedef struct {
 /** @} */
 
 /** @} */
+
+/** @defgroup MC_CMP_CMD_GENERATE_BINDING_KEY MC_CMP_CMD_GENERATE_BINDING_KEY
+ * @{ */
+
+/** Total number of bytes used for PSS signature in GENERATE BINDING KEY command. */
+#define CMP_GEN_BINDING_KEY_PSS_SIZE 256
+
+/** Total number of bytes used for receipt data in GENERATE BINDING KEY response. */
+#define CMP_GEN_BINDING_RECEIPT_ENC_PART_SIZE  256
+
+/**  Maximum Length in bytes for the entropy input */
+#define CMP_GEN_BINDING_KEY_ENTROPY_SIZE_MAX (56)
+
+/** @defgroup MC_CMP_CMD_GENERATE_BINDING_KEY_CMD Command
+ * @{ */
+
+typedef struct {
+    /** Command header. */
+    cmpCommandHeader_t cmdHeader;
+	/** Key id. */
+    uint32_t           kid;
+} cmpGenBindingKeyCmdSdata_t;
+
+typedef struct {
+    /** Signed data. */
+    cmpGenBindingKeyCmdSdata_t sdata;
+    /** Signature. */
+    uint8_t pssSignature[CMP_GEN_BINDING_KEY_PSS_SIZE];
+    /** Production Station Serial Number. */
+    uint64_t serialNumber;
+    /** Timestamp (seconds since epoch). */
+    uint64_t           timestamp;
+    /** Additional entropy length in bytes. */
+    uint16_t  entropyLen;
+    /** Additional entropy for K.SoC.Auth generation */
+    uint8_t   entropy[CMP_GEN_BINDING_KEY_ENTROPY_SIZE_MAX];
+} cmpCmdGenBindingKeyCmd_t;
+
+/** GenBindingKey command. */
+typedef struct {
+    /** Command. */
+    cmpCmdGenBindingKeyCmd_t cmd;
+} cmpCmdGenBindingKey_t;
+
+/** @} */
+
+/** @defgroup MC_CMP_CMD_GENERATE_BINDING_KEY_RSP Response
+ * @{ */
+
+/** Receipt Data. */
+typedef struct {
+    uint8_t dataPart1[CMP_GEN_BINDING_RECEIPT_ENC_PART_SIZE];
+    uint8_t dataPart2[CMP_GEN_BINDING_RECEIPT_ENC_PART_SIZE];
+} receipt_t;
+
+typedef struct {
+    /** Response header. */
+    cmpResponseHeader_t rspHeader;
+    /** Suid. */
+    mcSuid_t suid;
+    /**Receipt data. */
+    receipt_t receipt;
+} cmpGenBindingKeyRsp_t;
+
+/** GenBindingKey response. */
+typedef struct {
+    /** Response. */
+    cmpGenBindingKeyRsp_t rsp;
+    /** AuthToken container. */
+    mcSoAuthTokenCont_t soAuthCont;
+} cmpRspGenBindingKey_t;
+
+/** @} */
+
+/** @} */ 
 
 #endif // CMP_COMMON_H_
 

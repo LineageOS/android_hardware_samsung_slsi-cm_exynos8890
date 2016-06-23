@@ -1,40 +1,35 @@
 /*
- * Copyright (c) 2013 TRUSTONIC LIMITED
- * All rights reserved
+ * Copyright (c) 2013-2014 TRUSTONIC LIMITED
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. The name of the author may not be used to endorse or promote
- *    products derived from this software without specific prior
- *    written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS
- * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
- * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 3. Neither the name of the TRUSTONIC LIMITED nor the names of its
+ *    contributors may be used to endorse or promote products derived from
+ *    this software without specific prior written permission.
  *
- *
- * @addtogroup FCI
- * @{
- * @file
- * FastCall declarations.
- *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+/**
  * Holds the functions for SIQ, YIELD and FastCall for switching to the secure world.
- *
-
  */
 #ifndef MCIFC_H_
 #define MCIFC_H_
@@ -46,9 +41,40 @@
 
 // --- global ----
 #define MC_FC_INVALID                ((uint32_t)  0 )  /**< Invalid FastCall ID */
+
+#if defined(__AARCH32__)
+
+// These should be handled as 64-bit FCs; now they are more like 32bits...
+#define MC_FC_STD64_BASE             ((uint32_t)0xFF000000)
+#define MC_FC_STD64(x)               ((uint32_t)(MC_FC_STD64_BASE + (x)))
+
+#define MC_FC_INIT                   MC_FC_STD64(1)  /**< Initializing FastCall. */
+#define MC_FC_INFO                   MC_FC_STD64(2)  /**< Info FastCall. */
+
+// --- MEM traces ---
+#define MC_FC_MEM_TRACE              MC_FC_STD64(10)  /**< Enable SWd tracing via memory */
+
+// --- store value in sDDRRAM ---
+#define MC_FC_STORE_BINFO            MC_FC_STD64(20)  /**< write a 32bit value in secure DDRRAM in incremented art (max 2kB) */
+#define MC_FC_LOAD_BINFO             MC_FC_STD64(21)  /**< load a 32bit value from secure DDRRAM using an offset */
+
+// --- system settings ---
+#define MC_FC_STAT_COUNTER           MC_FC_STD64(30)  /**< Require status counter */
+
+// --- sleep modes ---
+#define MC_FC_SLEEP                  MC_FC_STD64(40)  /**< enter power-sleep */
+#define MC_FC_AFTR                   MC_FC_STD64(41)  /**< enter AFTR-sleep (called from core-0) */
+// --- wake-up access ---
+#define MC_FC_CORE_X_WAKEUP          MC_FC_STD64(50)  /**< wakeup/boot core-x (optional core-number in r1, not "0" ) */
+#define MC_FC_C15_RESUME             MC_FC_STD64(51)  /**< Write power control & diag registers */
+#define MC_FC_CMD_SAVE               MC_FC_STD64(52)  /**< Save core context to CP15 table(r1 is core number) */
+#define MC_FC_CMD_SHUTDOWN           MC_FC_STD64(53)  /**< Shutdown core(r1 is core number, cache flush is expected) */
+#define MC_FC_SWAP_CPU               MC_FC_STD64(54)  /**< Change new active Core */
+
+#else
+
 #define MC_FC_INIT                   ((uint32_t)(-1))  /**< Initializing FastCall. */
 #define MC_FC_INFO                   ((uint32_t)(-2))  /**< Info FastCall. */
-
 // following defines are currently frozen, so they will candidate for later big-change
 // --- sleep modes ---
 #define MC_FC_SLEEP                  ((uint32_t)(-3))  /**< enter power-sleep */
@@ -58,6 +84,8 @@
 #define MC_FC_C15_RESUME             ((uint32_t)(-11)) /**< Write power control & diag registers */
 #define MC_FC_CMD_SAVE               ((uint32_t)(-6))  /**< Save core context to CP15 table(r1 is core number) */
 #define MC_FC_CMD_SHUTDOWN           ((uint32_t)(-7))  /**< Shutdown core(r1 is core number, cache flush is expected) */
+// --- fiq debugger ---
+#define MC_FC_ENABLE_INTERRUPT_FIQ_DUMP ((uint32_t)(-8))  /**< enable a certain interrupt, r1 is the interrupt id */
 // --- L2 cache access ---
 #define MC_FC_L2X0_CTRL             ((uint32_t)(-21))  /**< Write to L2X0 control register */
 #define MC_FC_L2X0_SETUP1           ((uint32_t)(-22))  /**< Setup L2X0 register - part 1 */
@@ -75,12 +103,10 @@
 #define MC_FC_STORE_BINFO          ((uint32_t)(-201))  /**< write a 32bit value in secure DDRRAM in incremented art (max 2kB) */
 #define MC_FC_LOAD_BINFO           ((uint32_t)(-202))  /**< load a 32bit value from secure DDRRAM using an offset */
 
-// Broadcom Specific Fastcalls
-#define MC_FC_BCM_VC_CORE_START    ((uint32_t)(-301)) /**<  Set the VC Core start address*/
-#define MC_FC_MAX_ID         ((uint32_t)(0xFFFF0000))  /**< Maximum allowed FastCall ID */
-
 #define MC_FC_SWAP_CPU              ((uint32_t)(0x84000005))  /**< Change new active Core */
 // r1 is requested status (0,1,2), on return r2 holds this status value
+
+#endif
 
 /** @} */
 

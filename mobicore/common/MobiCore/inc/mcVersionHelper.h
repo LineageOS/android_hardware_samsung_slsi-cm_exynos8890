@@ -1,25 +1,39 @@
-/** @addtogroup MC_RTM
- * @{
- * MobiCore Version Helper Macros
+/*
+ * Copyright (c) 2013-2014 TRUSTONIC LIMITED
+ * All rights reserved.
  *
- * Copyright (c) 2013 TRUSTONIC LIMITED
- * All rights reserved
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- * The present software is the confidential and proprietary information of
- * TRUSTONIC LIMITED. You shall not disclose the present software and shall
- * use it only in accordance with the terms of the license agreement you
- * entered into with TRUSTONIC LIMITED. This software may be subject to
- * export or import laws in certain countries.
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the TRUSTONIC LIMITED nor the names of its
+ *    contributors may be used to endorse or promote products derived from
+ *    this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+#ifndef MCVERSIONHELPER_H_
+#define MCVERSIONHELPER_H_
+
 #include <stdio.h>
 
-//lint -emacro(*,MC_CHECK_VERSION) Disable all warnings for this macro.
-//lint -emacro(*,MC_MAKE_VERSION) Disable all warnings for this macro.
-//lint -emacro(*,MC_GET_MAJOR_VERSION) Disable all warnings for this macro.
-//lint -emacro(*,MC_GET_MINOR_VERSION) Disable all warnings for this macro.
-//lint -emacro(*,MC_GET_MINOR_VERSION) Disable all warnings for this macro.
-//lint -emacro(*,ASSERT_VERSION_IMPLEMENTATION) Disable all warnings for this macro.
-//lint -esym(*,Actual_*) Disable all warnings for these functions.
 
 /** Create a version number given major and minor numbers. */
 #define MC_MAKE_VERSION(major,minor) \
@@ -125,7 +139,7 @@
         uint32_t major = MC_GET_MAJOR_VERSION(version); \
         uint32_t minor = MC_GET_MINOR_VERSION(version); \
         *errmsg = NULL; \
-        if ((major == majorRequired) && (minor >= minorRequired)) { \
+        if ((major == majorRequired) && ((minor == minorRequired) || (minor > minorRequired))) { \
             return 1; \
         }; \
         return 0; \
@@ -211,3 +225,6 @@
         return 0; \
     }
 #endif
+
+#endif // MCVERSIONHELPER_H_
+

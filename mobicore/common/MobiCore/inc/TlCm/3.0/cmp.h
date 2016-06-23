@@ -1,3 +1,33 @@
+/*
+ * Copyright (c) 2013 TRUSTONIC LIMITED
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the TRUSTONIC LIMITED nor the names of its
+ *    contributors may be used to endorse or promote products derived from
+ *    this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 /** @addtogroup CMP
  * Content Management Protocol Definitions.
  *
@@ -11,33 +41,6 @@
  * CMP TCI global definitions.
  * Various components need access to (sub-)structures defined and used by CMP;
  * these common definitions are made available through this header file.
- *
- * Copyright © Trustonic Limited 2013.
- *
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- * 3. Neither the name of the Trustonic Limited nor the names of its
- *    contributors may be used to endorse or promote products derived from this
- *    software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
  */
 
 #ifndef CMP_H_
@@ -48,7 +51,11 @@
 /** Info of the whole mapped memory with NWd. */
 typedef struct {
     /** Address of the mapped memory. */
+#if ( __WORDSIZE == 64 )
+    uint32_t addr;         /**< The virtual address of the Bulk buffer regarding the address space of the Trusted Application, already includes a possible offset! */
+#else
     void* addr;
+#endif
     /** Size of the mapped memory. */
     uint32_t len;
 } cmpMapInfo_t;
@@ -171,6 +178,38 @@ typedef struct {
     /** Offset of the mapped AuthTokenCont with NWd. */
     cmpMapOffsetInfo_t cmpAuthTokenContMapOffsetInfo;
 } cmpRspGenAuthTokenTci_t;
+
+/** @} */
+
+/** @} */
+
+/** @defgroup MC_CMP_CMD_GENERATE_BINDING_KEY_TCI \
+ MC_CMP_CMD_GENERATE_BINDING_KEY_TCI
+ * @{ */
+
+/** @defgroup MC_CMP_CMD_GENERATE_BINDING_KEY_TCI_CMD Command
+ * @{ */
+
+/** GenBindingKey TCI command. */
+typedef struct {
+    /** Command header. */
+    cmpCommandHeaderTci_t cmdHeader;
+} cmpCmdGenBindingKeyTci_t;
+
+/** @} */
+
+/** @defgroup MC_CMP_CMD_GENERATE_BINDING_KEY_TCI_RSP Response
+ * @{ */
+
+/** GenAuthToken TCI response. */
+typedef struct {
+    /** Response header. */
+    cmpResponseHeaderTci_t rspHeaderTci;
+    /** Offset of the mapped CMP response with NWd. */
+    cmpMapOffsetInfo_t cmpRspMapOffsetInfo;
+    /** Offset of the mapped AuthTokenCont with NWd. */
+    cmpMapOffsetInfo_t cmpAuthTokenContMapOffsetInfo;
+} cmpRspGenBindingKeyTci_t;
 
 /** @} */
 
