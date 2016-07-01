@@ -1,32 +1,24 @@
-/*
- * Copyright (c) 2013-2014 TRUSTONIC LIMITED
- * All rights reserved.
+/**
+ * @defgroup MCLF   MobiCore Load Format
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * @defgroup MCLF_VER    MCLF Versions
+ * @ingroup MCLF
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ * @addtogroup MCLF
+ * @{
  *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
+ * MobiCore Load Format declarations.
  *
- * 3. Neither the name of the TRUSTONIC LIMITED nor the names of its
- *    contributors may be used to endorse or promote products derived from
- *    this software without specific prior written permission.
+ * Holds the definitions for the layout of MobiCore Trustlet Blob.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
- * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * Copyright (c) 2013 TRUSTONIC LIMITED
+ * All rights reserved
+ *
+ * The present software is the confidential and proprietary information of
+ * TRUSTONIC LIMITED. You shall not disclose the present software and shall
+ * use it only in accordance with the terms of the license agreement you
+ * entered into with TRUSTONIC LIMITED. This software may be subject to
+ * export or import laws in certain countries.
  */
 #ifndef MCLOADFORMAT_H_
 #define MCLOADFORMAT_H_
@@ -44,9 +36,16 @@
 #define MC_SERVICE_HEADER_MAGIC_STR         "MCLF"                                        /**< "MCLF" as string */
 
 /** @name MCLF flags */
+/*@{*/
 #define MC_SERVICE_HEADER_FLAGS_PERMANENT               (1U << 0) /**< Loaded service cannot be unloaded from MobiCore. */
 #define MC_SERVICE_HEADER_FLAGS_NO_CONTROL_INTERFACE    (1U << 1) /**< Service has no WSM control interface. */
 #define MC_SERVICE_HEADER_FLAGS_DEBUGGABLE              (1U << 2) /**< Service can be debugged. */
+/*@}*/
+
+#if !defined(ADDR_T_DEFINED)
+#define ADDR_T_DEFINED
+typedef void*    addr_t;                /**< an address, can be physical or virtual */
+#endif // !defined(ADDR_T_DEFINED)
 
 /** Service type.
  * The service type defines the type of executable.
@@ -56,6 +55,7 @@ typedef enum {
     SERVICE_TYPE_DRIVER     = 1,        /**< Service is a driver. */
     SERVICE_TYPE_SP_TRUSTLET   = 2,     /**< Service is a Trustlet. */
     SERVICE_TYPE_SYSTEM_TRUSTLET = 3,   /**< Service is a system Trustlet. */
+//    SERVICE_TYPE_SP_TA = 4,             /**< Service is a Trusted Application for t-base 300. */
 } serviceType_t;
 
 /**
@@ -71,7 +71,7 @@ typedef enum {
  * Descriptor for a memory segment.
  */
 typedef struct {
-    uint32_t    start;  /**< Virtual start address. */
+    addr_t      start;  /**< Virtual start address. */
     uint32_t    len;    /**< Length of the segment in bytes. */
 } segmentDescriptor_t, *segmentDescriptor_ptr;
 
@@ -84,6 +84,8 @@ typedef struct {
     uint32_t        version;    /**< Version of the MCLF header structure. */
 } mclfIntro_t, *mclfIntro_ptr;
 
+/** @} */
+
 
 // Version 2 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -91,6 +93,7 @@ typedef struct {
  * @ingroup MCLF_VER
  *
  * @addtogroup MCLF_VER_V2
+ * @{
  */
 
 /**
@@ -117,7 +120,7 @@ typedef struct {
     segmentDescriptor_t     text;           /**< Virtual text segment. */
     segmentDescriptor_t     data;           /**< Virtual data segment. */
     uint32_t                bssLen;         /**< Length of the BSS segment in bytes. MUST be at least 8 byte. */
-    uint32_t                entry;          /**< Virtual start address of service code. */
+    addr_t                  entry;          /**< Virtual start address of service code. */
     uint32_t                serviceVersion; /**< Version of the interface the driver exports. */
 
 // These should be put on next MCLF update:
@@ -125,6 +128,7 @@ typedef struct {
 //    uint32_t                permittedHwCf;  /**< Starting 2.3: If nonzero, hw configuration which is allowed to execute binary */
 
 } mclfHeaderV2_t, *mclfHeaderV2_ptr;
+/** @} */
 
 
 /**
@@ -135,6 +139,7 @@ typedef struct {
     mcSuid_t                permittedSuid;  /**< Starting 2.3: If nonzero, suid which is allowed to execute binary */
     uint32_t                permittedHwCfg; /**< Starting 2.3: If nonzero, hw configuration which is allowed to execute binary */
 } mclfHeaderV23_t, *mclfHeaderV23_ptr;
+/** @} */
 
 
 /**
@@ -146,6 +151,7 @@ typedef struct {
     uint32_t                attestationOffset;  /**<Starting 2.4: Offset of attestation data area. */
 
 } mclfHeaderV24_t, *mclfHeaderV24_ptr;
+/** @} */
 
 
 
@@ -158,16 +164,16 @@ typedef struct {
 typedef struct {
     uint32_t                version;        /**< Version of the TextHeader structure. */
     uint32_t                textHeaderLen;  /**< Size of this structure (fixed at compile time) */
-    uint32_t                requiredFeat;   /**< Flags to indicate features that Mobicore must understand/interpret when loading.
+    uint32_t                requiredFeat;   /**< Flags to indicate features that Mobicore must understand/interprete when loading.
                                                  Initial value set at compile time.
                                                  Required always. */
-    uint32_t                mcLibEntry;     /**< Address for McLib entry.
+    addr_t                  mcLibEntry;     /**< Address for McLib entry.
                                                  Mobicore sets at load time for trustlets / drivers.
                                                  Required always. */
     segmentDescriptor_t     mcLibData;      /**< Segment for McLib data.
                                                  Set at compile time.
                                                  Required always. */
-    uint32_t                mcLibBase;      /**< McLib base address.
+    addr_t                  mcLibBase;      /**< McLib base address.
                                                  Mobicore sets at load time for trustlets / drivers.
                                                  Required always. */
     uint32_t                tlApiVers;      /**< TlApi version used when building trustlet.
@@ -176,12 +182,13 @@ typedef struct {
     uint32_t                drApiVers;      /**< DrApi version used when building trustlet.
                                                  Value set at compile time for drivers. 0 for trustlets.
                                                  Required always. */
-    uint32_t                ta_properties;  /**< address of _TA_Properties in the TA. */
+    addr_t                  ta_properties;  /**< address of _TA_Properties in the TA. */
 } mclfTextHeader_t, *mclfTextHeader_ptr;
 
 // Version 2 ///////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * @addtogroup MCLF
+ * @{
  */
 
 /** MCLF header */
@@ -203,3 +210,4 @@ typedef union {
 
 #endif /* MCLOADFORMAT_H_ */
 
+/** @} */

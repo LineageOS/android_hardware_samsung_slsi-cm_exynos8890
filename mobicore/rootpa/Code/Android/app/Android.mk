@@ -15,10 +15,6 @@ LOCAL_CERTIFICATE := platform
 
 LOCAL_PROGUARD_FLAGS := -include $(LOCAL_PATH)/proguard-project.txt
 
-APP_PIE := true
-LOCAL_32_BIT_ONLY := true
-LOCAL_DEX_PREOPT := false
-
 include $(BUILD_PACKAGE)
 
 include $(CLEAR_VARS)

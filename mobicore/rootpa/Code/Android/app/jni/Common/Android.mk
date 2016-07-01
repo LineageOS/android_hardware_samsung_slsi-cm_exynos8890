@@ -29,57 +29,56 @@
 # OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+
 #
-# makefile for building the provisioning agent JNI wrapper for using the Common part
-# from Android Java code. build the code by executing
+# makefile for building the provisioning agent Common part for android. build the code by executing
 # $NDK_ROOT/ndk-build in the folder where this file resides
-# (or build all from one level up)
 #
-# Naturally the right way to build this is using build script in Build folder.
-# It then uses this file in turn.
+# naturally the right way to build is to use build script under Build folder. It then uses this file.
+#
+
+
 
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_CFLAGS += -DANDROID_ARM=1
+LOCAL_CFLAGS += -DANDROID
 LOCAL_CFLAGS +=-fstack-protector
 ifeq ($(DEBUG), 1)
     LOCAL_CFLAGS += -D__DEBUG=1
 endif
 
-LOCAL_MULTILIB := both
-
-LOCAL_SRC_FILES += commonwrapper.cpp
-LOCAL_SRC_FILES += JniHelpers.cpp
-LOCAL_SRC_FILES += CmpResponses.cpp
-LOCAL_SRC_FILES += CmpCommands.cpp
-LOCAL_SRC_FILES += CmpBase.cpp
+LOCAL_SRC_FILES += ../../../../Common/commandhandler.c
+LOCAL_SRC_FILES += ../../../../Common/pacmp3.c
+LOCAL_SRC_FILES += ../../../../Common/pacmtl.c
+LOCAL_SRC_FILES += ../../../../Common/trustletchannel.c
+LOCAL_SRC_FILES += ../../../../Common/registry.c
+LOCAL_SRC_FILES += ../../../../Common/seclient.c
+LOCAL_SRC_FILES += ../../../../Common/base64.c
+LOCAL_SRC_FILES += ../../../../Common/xmlmessagehandler.c
+LOCAL_SRC_FILES += ../../../../Common/provisioningengine.c
+LOCAL_SRC_FILES += ../../../../Common/contentmanager.c
 
 LOCAL_C_INCLUDES +=  $(MOBICORE_DIR_INC)
 LOCAL_C_INCLUDES +=  $(MOBICORE_DIR_INC)/TlCm
+LOCAL_C_INCLUDES +=  $(MOBICOREDRIVER_DIR_INC)
+LOCAL_C_INCLUDES +=  $(MOBICOREDRIVER_DIR_INC2)
+LOCAL_C_INCLUDES +=  external/curl/include
+LOCAL_C_INCLUDES +=  external/libxml2/include
+LOCAL_C_INCLUDES +=  external/icu/icu4c/source/common
+LOCAL_C_INCLUDES +=  $(LOCAL_PATH)/../../../../Common
 LOCAL_C_INCLUDES +=  $(LOCAL_PATH)/../../../../Common/include
 
-LOCAL_MODULE    := libcommonpawrapper
-LOCAL_MODULE_TAGS := debug eng optional
+LOCAL_MULTILIB := both
 
 ifeq ($(ROOTPA_MODULE_TEST), 1)
-    LOCAL_STATIC_LIBRARIES += provisioningagent_test
-    LOCAL_STATIC_LIBRARIES += McStub
+    LOCAL_STATIC_LIBRARIES +=  McStub
+    LOCAL_MODULE    := provisioningagent_test
 else
-    LOCAL_STATIC_LIBRARIES += provisioningagent
-
-    LOCAL_SHARED_LIBRARIES  += libMcClient
-    LOCAL_SHARED_LIBRARIES  += libMcRegistry
+    LOCAL_MODULE    := provisioningagent
 endif
 
-#LOCAL_LDLIBS += -L$(SYSROOT)/usr/lib
+LOCAL_MODULE_TAGS := debug eng optional
 
-LOCAL_SHARED_LIBRARIES += liblog
-LOCAL_SHARED_LIBRARIES += libz
-LOCAL_SHARED_LIBRARIES += libssl
-LOCAL_SHARED_LIBRARIES += libcrypto
-LOCAL_SHARED_LIBRARIES += libcurl
-LOCAL_STATIC_LIBRARIES += libxml2
-LOCAL_SHARED_LIBRARIES += libicuuc
-
-include $(BUILD_SHARED_LIBRARY)
+include $(BUILD_STATIC_LIBRARY)

@@ -1,4 +1,0 @@
-Copy here specific files for your integration
-
-coming from :
-    package_template/AndroidIntegration/mobicore/Android.mk

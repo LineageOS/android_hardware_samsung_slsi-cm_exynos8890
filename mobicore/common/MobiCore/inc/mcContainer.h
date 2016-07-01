@@ -1,32 +1,15 @@
-/*
- * Copyright (c) 2013-2014 TRUSTONIC LIMITED
- * All rights reserved.
+/** @addtogroup MC_CONTAINER mcContainer - Containers for MobiCore Content Management.
+ * @ingroup  MC_DATA_TYPES
+ * @{
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Copyright (c) 2013 TRUSTONIC LIMITED
+ * All rights reserved
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * 3. Neither the name of the TRUSTONIC LIMITED nor the names of its
- *    contributors may be used to endorse or promote products derived from
- *    this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
- * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * The present software is the confidential and proprietary information of
+ * TRUSTONIC LIMITED. You shall not disclose the present software and shall
+ * use it only in accordance with the terms of the license agreement you
+ * entered into with TRUSTONIC LIMITED. This software may be subject to
+ * export or import laws in certain countries.
  */
 
 #ifndef MC_CONTAINER_H_
@@ -107,15 +90,15 @@ typedef enum {
     /** SOC container. */
     CONT_TYPE_SOC = 0,
     /** Root container. */
-    CONT_TYPE_ROOT = 1,
+    CONT_TYPE_ROOT,
     /** Service provider container. */
-    CONT_TYPE_SP = 2,
+    CONT_TYPE_SP,
     /** Trustlet container. */
-    CONT_TYPE_TLCON = 3,
+    CONT_TYPE_TLCON,
     /** Service provider data. */
-    CONT_TYPE_SPDATA = 4,
+    CONT_TYPE_SPDATA,
     /** Trustlet data. */
-    CONT_TYPE_TLDATA = 5
+    CONT_TYPE_TLDATA
 } contType_t;
 
 /** SHA256 checksum. */
@@ -125,7 +108,7 @@ typedef struct {
 
 /** @defgroup MC_CONTAINER_CRYPTO_OBJECTS Container secrets.
  * Data that is stored encrypted within the container.
- */
+ * @{ */
 
 /** SoC secret */
 typedef struct {
@@ -158,9 +141,11 @@ typedef union {
     mcUuid_t uuid;
 } mcCid_t;
 
+/** @} */
+
 /** @defgroup MC_CONTAINER_CONTAINER_OBJECTS Container definitions.
  * Container type definitions.
- */
+ * @{ */
 
 /** SoC Container */
 typedef struct {
@@ -228,6 +213,8 @@ typedef struct {
     mcCoDataCont_t co;
 } mcDataCont_t;
 
+/** @} */
+
 /** Helper for finding maximum value */
 #define MC_MAX(x, y) (((x)<(y))?(y):(x))
 
@@ -247,7 +234,7 @@ typedef struct {
 
 /** @defgroup MC_CONTAINER_SECURE_OBJECTS Containers in secure objects.
  * Secure objects wrapping different containers.
- */
+ * @{ */
 
 /** Authentication token */
 typedef struct {
@@ -313,5 +300,8 @@ typedef struct {
 
 #define MC_TLBLOBLEN_MAGIC 0x7672746C
 
+/** @} */
+
 #endif // MC_CONTAINER_H_
 
+/** @} */
