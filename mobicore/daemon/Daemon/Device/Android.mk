@@ -22,4 +22,4 @@ LOCAL_SRC_FILES += $(DEVICE_PATH)/DeviceIrqHandler.cpp \
 	$(DEVICE_PATH)/TAExitHandler.cpp \
 	$(DEVICE_PATH)/MobiCoreDevice.cpp \
 	$(DEVICE_PATH)/NotificationQueue.cpp \
-	$(DEVICE_PATH)/TrustletSession.cpp \
+	$(DEVICE_PATH)/TrustletSession.cpp
