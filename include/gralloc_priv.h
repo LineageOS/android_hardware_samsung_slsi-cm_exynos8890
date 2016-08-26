@@ -31,6 +31,8 @@
 
 /*****************************************************************************/
 
+#define DBG_LVL 1
+
 struct private_module_t;
 struct private_handle_t;
 typedef int ion_user_handle_t;
