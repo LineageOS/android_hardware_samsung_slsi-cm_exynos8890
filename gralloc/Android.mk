@@ -22,10 +22,10 @@ include $(CLEAR_VARS)
 LOCAL_MODULE_RELATIVE_PATH := hw
 LOCAL_SHARED_LIBRARIES := liblog libcutils libion libutils libstlport libGLESv1_CM
 
-LOCAL_C_INCLUDES := hardware/samsung_slsi-cm/exynos7580/include
+LOCAL_C_INCLUDES := hardware/samsung_slsi-cm/exynos8890/include
 
-ifneq ($(filter exynos7580, $(TARGET_SOC)),)
-	LOCAL_CFLAGS += -DUSES_EXYNOS_7580
+ifneq ($(filter exynos8890, $(TARGET_SOC)),)
+	LOCAL_CFLAGS += -DUSES_EXYNOS_8890
 endif
 
 LOCAL_SRC_FILES := 	\
