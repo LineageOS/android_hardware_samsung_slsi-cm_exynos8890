@@ -112,6 +112,8 @@ void MobiCoreDriverDaemon::run(
     void
 )
 {
+    const char *devNode = "/dev/" MC_ADMIN_DEVNODE;
+
     LOG_I_RELEASE("Daemon starting up...");
     LOG_I_RELEASE("Socket interface version is %u.%u", DAEMON_VERSION_MAJOR, DAEMON_VERSION_MINOR);
 
@@ -132,9 +134,9 @@ void MobiCoreDriverDaemon::run(
 
     // initialize device (setupo MCI)
     if (!mobiCoreDevice->initDevice(
-                "/dev/" MC_ADMIN_DEVNODE,
+                devNode,
                 enableScheduler)) {
-        LOG_E("Could not initialize <t-base!");
+        LOG_E("Could not initialize <t-base (because %s could not be openend)!", devNode);
         return;
     }
 
