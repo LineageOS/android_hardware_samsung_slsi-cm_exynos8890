@@ -1,4 +1,4 @@
-# Copyright (C) 2016 The Android Open Source Project
+# Copyright (C) 2008 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,21 +20,27 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE_RELATIVE_PATH := hw
-LOCAL_SHARED_LIBRARIES := liblog libcutils libion libutils libstlport
+LOCAL_SHARED_LIBRARIES := liblog libcutils libion libutils libstlport libGLESv1_CM
 
-LOCAL_C_INCLUDES := hardware/samsung_slsi-cm/exynos8890/include
+LOCAL_C_INCLUDES := hardware/samsung_slsi-cm/exynos7580/include
 
-ifneq ($(filter exynos8890, $(TARGET_SOC)),)
-	LOCAL_CFLAGS += -DUSES_EXYNOS_8890
+ifneq ($(filter exynos7580, $(TARGET_SOC)),)
+	LOCAL_CFLAGS += -DUSES_EXYNOS_7580
 endif
 
 LOCAL_SRC_FILES := 	\
 	gralloc.cpp 	\
+	gralloc_vsync.cpp \
 	framebuffer.cpp \
 	mapper.cpp
 
+LOCAL_CFLAGS := -DLOG_TAG=\"gralloc\"
+
+ifeq ($(BOARD_USE_BGRA_8888),true)
+LOCAL_CFLAGS += -DUSE_BGRA_8888
+endif
+
 LOCAL_MODULE := gralloc.exynos5
-LOCAL_CFLAGS:= -DLOG_TAG=\"gralloc\"
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_OWNER := samsung_arm
 
