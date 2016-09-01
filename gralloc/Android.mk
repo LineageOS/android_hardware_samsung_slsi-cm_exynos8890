@@ -1,4 +1,4 @@
-# Copyright (C) 2013 The Android Open Source Project
+# Copyright (C) 2008 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,12 +20,13 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE_RELATIVE_PATH := hw
-LOCAL_SHARED_LIBRARIES := liblog libcutils libion libutils libGLESv1_CM
+LOCAL_SHARED_LIBRARIES := liblog libcutils libion libutils libstlport libGLESv1_CM
 
-LOCAL_C_INCLUDES := \
-	$(LOCAL_PATH)/../include \
-	$(TOP)/hardware/samsung_slsi-cm/exynos/include \
-	$(TOP)/hardware/samsung_slsi-cm/exynos5/include
+LOCAL_C_INCLUDES := hardware/samsung_slsi-cm/exynos8890/include
+
+ifneq ($(filter exynos8890, $(TARGET_SOC)),)
+	LOCAL_CFLAGS += -DUSES_EXYNOS_8890
+endif
 
 LOCAL_SRC_FILES := 	\
 	gralloc.cpp 	\

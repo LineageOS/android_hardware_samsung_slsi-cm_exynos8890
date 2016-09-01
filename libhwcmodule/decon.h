@@ -175,10 +175,10 @@ struct s3c_fb_user_plane_alpha)
 struct s3c_fb_user_chroma)
 #define S3CFB_SET_VSYNC_INT             _IOW('F', 206, __u32)
 
-#define S3CFB_GET_ION_USER_HANDLE	_IOWR('F', 208, \
-						struct s3c_fb_user_ion_client)
-#define S3CFB_WIN_CONFIG		_IOW('F', 209, \
-						struct decon_win_config_data)
-#define S3CFB_WIN_PSR_EXIT		_IOW('F', 210, int)
+#define S3CFB_GET_ION_USER_HANDLE       _IOWR('F', 208, \
+struct s3c_fb_user_ion_client)
+#define S3CFB_WIN_CONFIG                _IOW('F', 209, \
+struct decon_win_config_data)
+#define S3CFB_WIN_PSR_EXIT              _IOW('F', 210, int)
 
 #endif
