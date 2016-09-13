@@ -119,7 +119,7 @@ struct MC_DRV_CMD_OPEN_SESSION_struct {
     uint32_t  commandId;
     uint32_t  deviceId;
     mcUuid_t  uuid;
-    uint32_t  tci;
+    uintptr_t tci;
     uint32_t  handle;
     uint32_t  len;
 };
@@ -141,7 +141,7 @@ struct MC_DRV_CMD_OPEN_TRUSTLET_struct {
     uint32_t  deviceId;
     mcSpid_t  spid;
     uint32_t  trustlet_len;
-    uint32_t  tci;
+    uintptr_t tci;
     uint32_t  handle;
     uint32_t  len;
 };
@@ -162,7 +162,7 @@ struct MC_DRV_CMD_OPEN_TRUSTED_APP_struct {
     uint32_t  commandId;
     uint32_t  deviceId;
     mcUuid_t  uuid;
-    uint32_t  tci;
+    uintptr_t  tci;
     uint32_t  handle;
     uint32_t  len;
 };
@@ -191,7 +191,7 @@ struct MC_DRV_CMD_MAP_BULK_BUF_struct {
     uint32_t  sessionId;
     uint32_t  handle;
     uint32_t  rfu;
-    uint32_t  offsetPayload;
+    uintptr_t offsetPayload;
     uint32_t  lenBulkMem;
 };
 
@@ -211,7 +211,7 @@ struct MC_DRV_CMD_UNMAP_BULK_BUF_struct {
     uint32_t  commandId;
     uint32_t  sessionId;
     uint32_t  handle;
-    uint32_t  secureVirtualAdr;
+    uintptr_t secureVirtualAdr;
     uint32_t  lenBulkMem;
 };
 
