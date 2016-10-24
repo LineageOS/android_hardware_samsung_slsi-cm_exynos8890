@@ -317,28 +317,6 @@ uint32_t TrustZoneDevice::getMobicoreStatus(void)
 }
 
 //------------------------------------------------------------------------------
-bool TrustZoneDevice::checkMciVersion(void)
-{
-    uint32_t version = 0;
-    int ret;
-    char *errmsg;
-
-    ret = pMcKMod->fcInfo(MC_EXT_INFO_ID_MCI_VERSION, NULL, &version);
-    if (ret != 0) {
-        LOG_E("pMcKMod->fcInfo() failed with %d", ret);
-        return false;
-    }
-
-    // Run-time check.
-    if (!checkVersionOkMCI(version, &errmsg)) {
-        LOG_E("%s", errmsg);
-        return false;
-    }
-    LOG_I("%s", errmsg);
-    return true;
-}
-
-//------------------------------------------------------------------------------
 void TrustZoneDevice::dumpMobicoreStatus(
     void
 ) {
