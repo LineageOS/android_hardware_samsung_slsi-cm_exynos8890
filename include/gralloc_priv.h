@@ -93,9 +93,18 @@ struct private_handle_t {
     int     vstride;
 
     // FIXME: the attributes below should be out-of-line
-    void    *base;
-    void    *base1;
-    void    *base2;
+    union {
+        void*    base;
+        uint64_t padding;
+    };
+    union {
+        void*    base1;
+        uint64_t padding1;
+    };
+    union {
+        void*    base2;
+        uint64_t padding2;
+    };
     ion_user_handle_t handle;
     ion_user_handle_t handle1;
     ion_user_handle_t handle2;
