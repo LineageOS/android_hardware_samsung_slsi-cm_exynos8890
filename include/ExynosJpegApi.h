@@ -249,4 +249,13 @@ public:
     int decode(void);
 };
 
+/* yuv444 of JFIF JPEG */
+#define V4L2_PIX_FMT_JPEG_444 v4l2_fourcc('J', 'P', 'G', '4')
+/* grey of JFIF JPEG */
+#define V4L2_PIX_FMT_JPEG_GRAY v4l2_fourcc('J', 'P', 'G', 'G')
+/* yuv422 of JFIF JPEG */
+#define V4L2_PIX_FMT_JPEG_422 v4l2_fourcc('J', 'P', 'G', '2')
+/* yuv420 of JFIF JPEG */
+#define V4L2_PIX_FMT_JPEG_420 v4l2_fourcc('J', 'P', 'G', '0')
+
 #endif /* __EXYNOS_JPEG_BASE_H__ */
