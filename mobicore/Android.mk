@@ -41,6 +41,3 @@ LOCAL_ADDITIONAL_DEPENDENCIES += \
 	$(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
 
 MOBICORE_DIR_INC := $(MC_INCLUDE_DIR) $(MOBICORE_PROJECT_PATH)/common/curl/include
-include $(MOBICORE_PROJECT_PATH)/rootpa/Code/Android/app/jni/Android.mk
-include $(MOBICORE_PROJECT_PATH)/rootpa/Code/Android/lib/Android.mk
-include $(MOBICORE_PROJECT_PATH)/rootpa/Code/Android/app/Android.mk
