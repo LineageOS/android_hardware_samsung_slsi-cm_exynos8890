@@ -79,6 +79,56 @@ inline decon_pixel_format halFormatToSocFormat(int format)
     }
 }
 
+static decon_idma_type getIdmaType(int32_t index)
+{
+    decon_idma_type ret = IDMA_G1;
+
+    switch(index) {
+    case 0:
+        ret = IDMA_G1;
+        break;
+    case 1:
+        ret = IDMA_G2;
+        break;
+    case 2:
+        ret = IDMA_G3;
+        break;
+    case 3:
+        ret = IDMA_VG0;
+        break;
+    case 4:
+        ret = IDMA_VG1;
+        break;
+    case 5:
+        ret = IDMA_VGR0;
+        break;
+    case 6:
+        ret = IDMA_VGR1;
+        break;
+    case 7:
+        ret = IDMA_G0;
+        break;
+    default:
+        ALOGE("%s: cannot handle index %d", __func__, index);
+        break;
+    }
+
+    return ret;
+}
+
+static bool isVppType(enum decon_idma_type idma_type)
+{
+    switch (idma_type) {
+    case IDMA_VG0:
+    case IDMA_VG1:
+    case IDMA_VGR0:
+    case IDMA_VGR1:
+        return true;
+    default:
+        return false;
+    }
+}
+
 #ifdef FIMD_BW_OVERLAP_CHECK
 const size_t MAX_NUM_FIMD_DMA_CH = 2;
 const uint32_t FIMD_DMA_CH_IDX[] = {0, 1, 1, 1, 0};
