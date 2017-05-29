@@ -84,7 +84,7 @@ typedef struct {
     uint32_t exponent;       /**< Exponent number */
     uint32_t keydata;        /**< Key data buffer passed by TLC  */
     uint32_t keydatalen;     /**< Length of key data buffer */
-    uint32_t solen;          /**< Secure object length  (of key data) (provided by the trustlet)  */
+    size_t   solen;          /**< Secure object length  (of key data) (provided by the trustlet)  */
 } rsagenkey_t;
 
 
@@ -97,7 +97,7 @@ typedef struct {
     uint32_t plaindata;         /**< Plaintext data buffer */
     uint32_t plaindatalen;      /**< Length of plaintext data buffer */
     uint32_t signaturedata;     /**< Signature data buffer */
-    uint32_t signaturedatalen;  /**< Length of signature data buffer */
+    size_t   signaturedatalen;  /**< Length of signature data buffer */
     uint32_t algorithm;         /**< Signing algorithm */
 } rsasign_t;
 
@@ -111,7 +111,7 @@ typedef struct {
     uint32_t plaindata;         /**< Plaintext data buffer */
     uint32_t plaindatalen;      /**< Length of plaintext data buffer */
     uint32_t signaturedata;     /**< Signature data buffer */
-    uint32_t signaturedatalen;  /**< Length of signature data buffer */
+    size_t   signaturedatalen;  /**< Length of signature data buffer */
     uint32_t algorithm;         /**< Signing algorithm */
     bool     validity;          /**< Signature validity */
 } rsaverify_t;
@@ -127,7 +127,7 @@ typedef struct {
 typedef struct {
     uint32_t keydata;        /**< Key data buffer passed by TLC  */
     uint32_t keydatalen;     /**< Length of key data buffer */
-    uint32_t solen;          /**< Secure object length  (of key data) (provided by the trustlet)  */
+    size_t   solen;          /**< Secure object length  (of key data) (provided by the trustlet)  */
 } hmacgenkey_t;
 
 
@@ -140,7 +140,7 @@ typedef struct {
     uint32_t plaindata;         /**< Plaintext data buffer */
     uint32_t plaindatalen;      /**< Length of plaintext data buffer */
     uint32_t signaturedata;     /**< Signature data buffer */
-    uint32_t signaturedatalen;  /**< Length of signature data buffer */
+    size_t   signaturedatalen;  /**< Length of signature data buffer */
     uint32_t digest;            /**< Digest algorithm */
 } hmacsign_t;
 
@@ -154,7 +154,7 @@ typedef struct {
     uint32_t plaindata;         /**< Plaintext data buffer */
     uint32_t plaindatalen;      /**< Length of plaintext data buffer */
     uint32_t signaturedata;     /**< Signature data buffer */
-    uint32_t signaturedatalen;  /**< Length of signature data buffer */
+    size_t   signaturedatalen;  /**< Length of signature data buffer */
     uint32_t digest;            /**< Digest algorithm */
     bool     validity;          /**< Signature validity */
 } hmacverify_t;
@@ -204,7 +204,7 @@ typedef struct {
     uint32_t     keydata;           /**< Key data buffer */
     uint32_t     keydatalen;        /**< Length of key data buffer */
     uint32_t     sodata;            /**< Wrapped buffer */
-    uint32_t     sodatalen;         /**< Length of wrapped data buffer */
+    size_t       sodatalen;         /**< Length of wrapped data buffer */
 } keyimport_t;
 
 

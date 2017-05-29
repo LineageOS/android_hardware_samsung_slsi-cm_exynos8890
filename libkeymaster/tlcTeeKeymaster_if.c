@@ -162,7 +162,7 @@ teeResult_t TEE_RSAGenerateKeyPair(
     uint32_t            keyDataLength,
     uint32_t            keySize,
     uint32_t            exponent,
-    uint32_t*           soLen
+    size_t*             soLen
 ){
     teeResult_t         ret = TEE_ERR_NONE;
     tciMessage_ptr      pTci = NULL;
@@ -256,7 +256,7 @@ teeResult_t TEE_RSASign(
     const uint8_t*  plainData,
     const uint32_t  plainDataLength,
     uint8_t*        signatureData,
-    uint32_t*       signatureDataLength,
+    size_t*         signatureDataLength,
     teeRsaSigAlg_t  algorithm
 ){
     teeResult_t        ret = TEE_ERR_NONE;
@@ -385,7 +385,7 @@ teeResult_t TEE_RSAVerify(
     const uint8_t*  plainData,
     const uint32_t  plainDataLength,
     const uint8_t*  signatureData,
-    const uint32_t  signatureDataLength,
+    const size_t    signatureDataLength,
     teeRsaSigAlg_t  algorithm,
     bool            *validity
 ){
@@ -508,7 +508,7 @@ teeResult_t TEE_RSAVerify(
 teeResult_t TEE_HMACKeyGenerate(
     uint8_t*  keyData,
     uint32_t  keyDataLength,
-    uint32_t* soLen
+    size_t*   soLen
 ){
     teeResult_t        ret = TEE_ERR_NONE;
     tciMessage_ptr     pTci = NULL;
@@ -597,7 +597,7 @@ teeResult_t TEE_HMACSign(
     const uint8_t*  plainData,
     const uint32_t  plainDataLength,
     uint8_t*        signatureData,
-    uint32_t*       signatureDataLength,
+    size_t*         signatureDataLength,
     teeDigest_t     digest
 ){
     teeResult_t        ret = TEE_ERR_NONE;
@@ -724,7 +724,7 @@ teeResult_t TEE_HMACVerify(
     const uint8_t*  plainData,
     const uint32_t  plainDataLength,
     const uint8_t*  signatureData,
-    const uint32_t  signatureDataLength,
+    const size_t    signatureDataLength,
     teeDigest_t     digest,
     bool            *validity
 ){
@@ -863,7 +863,7 @@ teeResult_t TEE_KeyImport(
     const uint8_t*  keyData,
     const uint32_t  keyDataLength,
     uint8_t*        soData,
-    uint32_t*       soDataLength
+    size_t*         soDataLength
 ){
     teeResult_t         ret = TEE_ERR_NONE;
     tciMessage_ptr      pTci = NULL;
