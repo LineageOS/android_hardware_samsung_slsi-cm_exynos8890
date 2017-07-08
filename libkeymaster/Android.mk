@@ -17,7 +17,7 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-MOBICORE_PATH := hardware/samsung_slsi-cm/exynos7420/mobicore
+MOBICORE_PATH := hardware/samsung_slsi-cm/exynos8890/mobicore
 
 LOCAL_MODULE := keystore.exynos5
 LOCAL_MODULE_RELATIVE_PATH := hw
