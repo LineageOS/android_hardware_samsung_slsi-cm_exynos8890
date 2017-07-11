@@ -160,7 +160,7 @@ const size_t GSC_W_ALIGNMENT = 16;
 const size_t GSC_H_ALIGNMENT = 16;
 const size_t GSC_DST_H_ALIGNMENT_RGB888 = 1;
 const size_t FIMD_GSC_IDX = 0;
-const size_t FIMD_GSC_SEC_IDX = 1;
+const size_t FIMD_GSC_SEC_IDX = 0;
 const size_t HDMI_GSC_IDX = 2;
 #ifdef USES_VIRTUAL_DISPLAY
 const size_t WFD_GSC_IDX = 3;
@@ -169,9 +169,9 @@ const size_t WFD_GSC_DRM_IDX = 3;
 #endif
 const int FIMD_GSC_USAGE_IDX[] = {FIMD_GSC_IDX, FIMD_GSC_SEC_IDX};
 #ifdef USES_VIRTUAL_DISPLAY
-const int AVAILABLE_GSC_UNITS[] = { 0, 1, 1, 1 };
+const int AVAILABLE_GSC_UNITS[] = { 1 };
 #else
-const int AVAILABLE_GSC_UNITS[] = { 0, 1, 1, 5 };
+const int AVAILABLE_GSC_UNITS[] = { 5 };
 #endif
 
 #endif
