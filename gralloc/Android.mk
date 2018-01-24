@@ -25,7 +25,10 @@ LOCAL_SHARED_LIBRARIES := liblog libcutils libion libutils libGLESv1_CM
 LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/../include \
 	$(TOP)/hardware/samsung_slsi-cm/exynos/include \
-	$(TOP)/hardware/samsung_slsi-cm/exynos5/include
+	$(TOP)/hardware/samsung_slsi-cm/exynos5/include \
+	$(TOP)/frameworks/native/libs/arect/include \
+	$(TOP)/frameworks/native/libs/nativebase/include \
+	$(TOP)/frameworks/native/libs/nativewindow/include
 
 LOCAL_SRC_FILES := 	\
 	gralloc.cpp 	\
