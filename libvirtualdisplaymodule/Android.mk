@@ -17,7 +17,7 @@ ifeq ($(filter-out exynos5,$(TARGET_BOARD_PLATFORM)),)
 LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_SHARED_LIBRARIES := liblog libutils libcutils libexynosutils libexynosv4l2 libsync libdisplay libvirtualdisplay
+LOCAL_SHARED_LIBRARIES := liblog libutils libcutils libexynosutils libexynosv4l2 libsync libexynosdisplay libvirtualdisplay
 
 LOCAL_CFLAGS += -DUSES_VIRTUAL_DISPLAY
 
@@ -30,7 +30,7 @@ LOCAL_C_INCLUDES := \
 	$(TOP)/hardware/samsung_slsi-cm/$(TARGET_SOC)/libhwcmodule \
 	$(TOP)/hardware/samsung_slsi-cm/exynos/libhwc \
 	$(TOP)/hardware/samsung_slsi-cm/exynos/libhwcutils \
-	$(TOP)/hardware/samsung_slsi-cm/exynos/libdisplay \
+	$(TOP)/hardware/samsung_slsi-cm/exynos/libexynosdisplay \
 	$(TOP)/hardware/samsung_slsi-cm/exynos/libvirtualdisplay
 
 LOCAL_ADDITIONAL_DEPENDENCIES += \
